@@ -2,6 +2,7 @@
 import socket
 import time, sys
 from datetime import datetime
+from tld import get_tld
 
 #assign variables
 host = ''
@@ -45,6 +46,16 @@ common_ports = {
 
 listing_ports = [21, 22, 23, 25, 53, 69, 80, 109, 110, 143, 156, 156, 443, 546, 547, 995, 993, 2086, 2087, 3306, 8443, 10000]
 
+#function to print out the usage
+def printUsage():
+    # print out how to use the programe
+    print ("""
+          Usage:
+             python filename topleveldomainname
+             eg.
+               python port_scanner.py google.com
+         """)
+
 #initial information to display to the user
 def initializing():
     #print out some information
@@ -62,9 +73,28 @@ else:
     #request the user to enter domain name
     host = input("[*] Enter a Remote Host to scan: ")
 
+#get the top level domain name
+try:
+    host = get_tld(host)
+except:
+    #print out error message
+    print("Sorry! You entered an invalid Remote Host Address [Please enter only the top level domain name]")
+    #call the usage function
+    printUsage()
+    #exit the application
+    sys.exit(1)
+    
 #get the real ip address of the domain name entered by the user
-ipaddress  = socket.gethostbyname(host)
-
+try:
+    ipaddress  = socket.gethostbyname(host)
+except:
+    #print out error message
+    print("Sorry! You entered an invalid Remote Host Address [Please enter only the top level domain name]")
+    #call the usage function
+    printUsage()
+    #exit the application
+    sys.exit(1)
+    
 #get the starting time
 t1 = time.time()
 

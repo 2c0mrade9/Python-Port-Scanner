@@ -1,7 +1,7 @@
 # scripting-files
 Most often as a pentester you will want to check the ports of a particular web address to find out if its really open
 
-To make life really simple, this script has been written with the simple Python Programming Techniques to aid users in this direction.
+To make life really simple, this python script has been written with the simple Python Programming Techniques to aid users in this direction.
 
 In using the file obvious you will have to download it first and then move it to a directory where you want to run it from.
 

@@ -126,7 +126,7 @@ def port_closed(port):
     # check if the port is available in the common ports dictionary
     if port in common_ports:
         # returns the service name if available
-        print("[*]", port, ' '*10, common_ports[port], ' '*10, 'Closed', ' '*10)
+        print("[*]", port, ' '*10, common_ports[port], ' '*10, 'Closed', ' '*10) 
 
 #using the range function to specify ports to scan
 #we also put in some error handling for catching errors

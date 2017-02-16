@@ -13,12 +13,14 @@ max_port = 30
 # You can add ports here. 
 # The key is the port number and the values is the service used by that port
 common_ports = {
-
+        '20': 'FTP',
 	'21': 'FTP',
 	'22': 'SSH',
 	'23': 'TELNET',
 	'25': 'SMTP',
 	'53': 'DNS',
+        '67': 'DHCP',
+        '68': 'DHCP',
 	'69': 'TFTP',
 	'80': 'HTTP',
 	'109': 'POP2',
@@ -29,12 +31,16 @@ common_ports = {
 	'139': 'NETBIOS-SSN',
 	'143': 'IMAP',
 	'156': 'SQL-SERVER',
+        '161': 'SNMP',
+        '162': 'SNMP',
 	'389': 'LDAP',
 	'443': 'HTTPS',
 	'546': 'DHCP-CLIENT',
 	'547': 'DHCP-SERVER',
 	'995': 'POP3-SSL',
 	'993': 'IMAP-SSL',
+        '989': 'TLS/SSL',
+        '990': 'TLS/SSL',
 	'2086': 'WHM/CPANEL',
 	'2087': 'WHM/CPANEL',
 	'2082': 'CPANEL',
@@ -44,7 +50,7 @@ common_ports = {
 	'10000': 'VIRTUALMIN/WEBMIN'
 }
 
-listing_ports = [21, 22, 23, 25, 53, 69, 80, 109, 110, 143, 156, 156, 443, 546, 547, 995, 993, 2086, 2087, 3306, 8443, 10000]
+listing_ports = [20,21,22,23,25,53,67,68,69,80,109,110,123,137,138,139,143,156,161,162,389,443,546,547,995,993,989,990,2086,2087,2083,3306,8443,10000]
 
 #function to print out the usage
 def printUsage():
@@ -128,13 +134,13 @@ try:
 
     print("[*] PORT ", ' '*6, " SERVICE", ' '*7, " STATUS ", ' '*5, " VERSION ", ' '*7)
     for port in listing_ports:
+        #set the timeout else there will be delays
+        socket.setdefaulttimeout(.5)
+        
         #port : port to scan
         #ipaddress : the ipaddress of the domain name
         #create the connection
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-       
-	#set the timeout else there will be delays
-        sock.settimeout(10)
         
 	#fetch the connection results
         result = sock.connect_ex((ipaddress, port))
